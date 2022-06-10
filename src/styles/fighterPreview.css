@@ -16,10 +16,23 @@
 /*=================== My abra-cadabra ======================*/
 
 
-.fighter-preview___img {
-  height: 350px;
+.fighter-preview___info-block .fighter-preview___img {
+  height: 325px;
 }
 
 .fighter-preview___info-block {
-  color: aliceblue;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: black;
+  -webkit-text-fill-color: white;
+  -webkit-text-stroke-width: 1px;
+  line-height: 1.1;
+  font-size: 17px;
+  font-family: 'Arial Black';
+  font-weight: 700;
+}
+
+.fighter-preview___info-block div:nth-child(2) {
+  font-size: 26px;
 }

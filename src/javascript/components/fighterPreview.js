@@ -13,10 +13,9 @@ export function createFighterPreview(fighter, position) {
   return fighterElement;
 }
 
-//refactor dat shit
-export function createFighterInfo(fighter) {
+function createFighterInfo(fighter) {
   if(!fighter) return ' '
-  const { source, name, health, attack, defense } = fighter;
+  const { name, health, attack, defense } = fighter;
 
   const container = createElement({
     tagName: 'div',
@@ -25,10 +24,7 @@ export function createFighterInfo(fighter) {
 
   const imgElement = createFighterImage(fighter)
   
-  const nameBlock = document.createElement({
-    tagName: 'div',
-    className: 'arena___fighter-name'
-  })
+  const nameBlock = document.createElement('div')
   nameBlock.innerText = name
 
   const healthBlock = document.createElement('div')
