@@ -59,25 +59,19 @@ function onKeyDown(firstFighter, secondFighter, resolve, e) {
   }
 }
 
-function getRandomIntInclusive(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+function random(min, max) {
+  return min + Math.random() * (max - min);
 }
 
 
 function setHealth(fighter, damage) {
-  if(damage > 0) {
-    fighter.currentHealth = fighter.currentHealth - damage
-    let cof = fighter.currentHealth / fighter.health * 100
-    if(cof < 0){
-      cof = 0
-    }
-    fighter.healthIndicator.style.width = cof  + '%'
-    displayHealth(fighter, damage)
-  }else {
-    displayHealth(fighter, 'Blocked')
+  fighter.currentHealth = fighter.currentHealth - damage
+  let cof = fighter.currentHealth / fighter.health * 100
+  if (cof < 0) {
+    cof = 0
   }
+  fighter.healthIndicator.style.width = cof + '%'
+  displayHealth(fighter, damage)
 }
 
 function criticalStrike(fighter) {
@@ -95,15 +89,20 @@ function displayHealth(fighter, damage) {
     tagName: 'div',
     className: 'arena__absorbed-damage'
   })
-  el.innerText = `-${damage}`
+  damage = - Math.round(damage)
+  if (damage === 0) {
+    el.innerText = 'Blocked'
+  } else {
+    el.innerText = `${damage}`
+  }
   fighter.healthIndicator.append(el)
 
   animate({
     duration: 850,
-    timing: makeEaseOut(linear),
+    timing: linear,
     draw(progress) {
       el.style.transform = `translateY(${-progress * 60}px)`
-      el.style.opacity = `${1 -progress}`
+      el.style.opacity = `${1 - progress}`
     }
   });
   setTimeout(() => {
@@ -112,29 +111,21 @@ function displayHealth(fighter, damage) {
 
 }
 
-function makeEaseOut(timing) {
-  return function(timeFraction) {
-    return 1 - timing(1 - timeFraction);
-  }
-}
-
 function linear(timeFraction) {
   return timeFraction;
 }
 
-function animate({timing, draw, duration}) {
+function animate({ timing, draw, duration }) {
 
   let start = performance.now();
 
   requestAnimationFrame(function animate(time) {
-    // timeFraction изменяется от 0 до 1
     let timeFraction = (time - start) / duration;
     if (timeFraction > 1) timeFraction = 1;
 
-    // вычисление текущего состояния анимации
     let progress = timing(timeFraction);
 
-    draw(progress); // отрисовать её
+    draw(progress);
 
     if (timeFraction < 1) {
       requestAnimationFrame(animate);
@@ -153,10 +144,10 @@ export function getDamage(attacker, defender) {
 
 export function getHitPower(fighter) {
   // return hit power
-  return fighter.attack * getRandomIntInclusive(1, 2)
+  return fighter.attack * random(1, 2)
 }
 
 export function getBlockPower(fighter) {
   // return block power
-  return fighter.defense * getRandomIntInclusive(1, 2)
+  return fighter.defense * random(1, 2)
 }
