@@ -28,22 +28,22 @@ function objWrapper(fighter, position) {
 
 function onKeyDown(firstFighter, secondFighter, resolve, e) {
   if (e.repeat) return
-  if (pressedKeys.has(controls.PlayerOneAttack) && !pressedKeys.has(controls.PlayerTwoBlock)) {
+  if (pressedKeys.has(controls.PlayerOneAttack) && !pressedKeys.has(controls.PlayerTwoBlock) && !pressedKeys.has(controls.PlayerOneBlock)) {
     const damage = getDamage(firstFighter, secondFighter)
     setHealth(secondFighter, damage)
   }
 
-  if (pressedKeys.has(controls.PlayerTwoAttack) && !pressedKeys.has(controls.PlayerOneBlock)) {
+  if (pressedKeys.has(controls.PlayerTwoAttack) && !pressedKeys.has(controls.PlayerOneBlock) && !pressedKeys.has(controls.PlayerTwoBlock)) {
     const damage = getDamage(secondFighter, firstFighter)
     setHealth(firstFighter, damage)
   }
 
-  if (pressedKeys.has(controls.PlayerOneCriticalHitCombination[0]) && pressedKeys.has(controls.PlayerOneCriticalHitCombination[1]) && pressedKeys.has(controls.PlayerOneCriticalHitCombination[2]) && firstFighter.criticalStrike) {
+  if (pressedKeys.has(controls.PlayerOneCriticalHitCombination[0]) && pressedKeys.has(controls.PlayerOneCriticalHitCombination[1]) && pressedKeys.has(controls.PlayerOneCriticalHitCombination[2]) && firstFighter.criticalStrike && !pressedKeys.has(controls.PlayerOneBlock)) {
     const damage = criticalStrike(firstFighter)
     setHealth(secondFighter, damage)
   }
 
-  if (pressedKeys.has(controls.PlayerTwoCriticalHitCombination[0]) && pressedKeys.has(controls.PlayerTwoCriticalHitCombination[1]) && pressedKeys.has(controls.PlayerTwoCriticalHitCombination[2]) && secondFighter.criticalStrike) {
+  if (pressedKeys.has(controls.PlayerTwoCriticalHitCombination[0]) && pressedKeys.has(controls.PlayerTwoCriticalHitCombination[1]) && pressedKeys.has(controls.PlayerTwoCriticalHitCombination[2]) && secondFighter.criticalStrike && !pressedKeys.has(controls.PlayerTwoBlock)) {
     const damage = criticalStrike(secondFighter)
     setHealth(firstFighter, damage)
   }
